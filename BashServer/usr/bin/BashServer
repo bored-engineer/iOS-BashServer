@@ -1,0 +1,4 @@
+#BashServer by @innoying
+
+#Start Server (in background)
+socat TCP-LISTEN:5853,fork,reuseaddr exec:"/usr/bin/BashServerExec"

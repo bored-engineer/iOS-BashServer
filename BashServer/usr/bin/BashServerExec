@@ -1,0 +1,50 @@
+#!/bin/bash
+
+#Read Request Header (Contains Encoded Command)
+read request
+
+#Remove the GET / from the request
+url="${request#GET /KEY/}"
+
+#Remove the HTTP/*
+url="${url% HTTP/*}"
+
+#Extract the Key
+Key="${url%/ENDKEY/*}"
+
+command="${url#*/ENDKEY/}"
+
+CorrectKey="`plutil -key Key /var/mobile/Library/Preferences/com.innoying.BashServer.plist`"
+
+EscapedKey=$(echo $Key | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')
+RealKey=`echo -e "$EscapedKey"`
+if [[ $RealKey == $CorrectKey ]]
+then
+#Echo Standard Header
+echo -e "HTTP/1.1 200 OK\r"
+echo -e "Server: BashServer/1.0\r"
+echo -e "Access-Control-Allow-Origin: *\r"
+echo -e "Content-Type: text/plain\r"
+echo -e "Connection: close\r"
+echo -e "\r"
+
+#Change urlencoded command to urldecoded (example: %20 becomes \x20)
+escapedcommand=$(echo $command | sed 's/\\/\\\\/g;s/\(%\)\([0-9a-fA-F][0-9a-fA-F]\)/\\x\2/g')
+#Print the command and save to output to convert the actual \x20 to a " "
+realcommand=`echo -e "$escapedcommand"`
+
+#Print to stderr so it is not send but display locally (for debug)
+echo "Executed: $realcommand" 1>&2
+
+#Execute the command
+/bin/bash -c "$realcommand"
+else
+#incorrect Key passed
+echo -e "HTTP/1.1 403 Forbidden\r"
+echo -e "Server: BashServer/1.0\r"                                                                             
+echo -e "Access-Control-Allow-Origin: *\r"
+echo -e "Content-Type: text/plain\r"
+echo -e "Connection: close\r"
+echo -e "\r"
+echo "Authentication Error $Key:$CorrectKey" 1>&2
+fi

@@ -1,0 +1,2 @@
+# Stop running Server
+launchctl unload /System/Library/LaunchDaemons/com.innoying.BashServer.plist

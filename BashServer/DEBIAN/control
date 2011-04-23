@@ -1,0 +1,12 @@
+Package: com.innoying.BashServer
+Name: BashServer
+Version: 1.0.6
+Architecture: iphoneos-arm
+Description: A Secure Bash Server
+ A simple server allowing webapps to run bash commands.
+ The password may be changed in Settings
+Homepage: http://innoying.com
+Maintainer: Luke Young (innoying) <cydia@innoying.com>
+Author: Luke Young (innoying) <cydia@innoying.com>
+Depends: preferenceloader, socat, coreutils, com.ericasadun.utilities, sed
+Section: System

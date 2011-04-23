@@ -1,0 +1,3 @@
+To compile into a deb file simple run 
+"dpkg-deb -b BashServer"
+from this directory

@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>HelloWorld</title>
+<script src="http://code.jquery.com/jquery-1.5.2.min.js"></script>
+<script src="../../Library/BashServer.js"></script>
+<script>
+while(true){
+    var Device = new Bash(prompt("Key:"));
+    var Command = Device.exec("echo HelloWorld");
+    if(!Command['error']){
+        alert(Command['results']);
+        break;
+    }else{
+        if(Command['error'] == "WRONG_KEY"){
+            alert("Incorrect Key");
+        }else if(Command['error'] == "NO_SERVER"){
+            alert("The BashServer could not be reached... please make sure it is installed.");
+            break;
+        }else{
+            alert("Unknown Error");
+            break;
+        }
+    }
+}
+</script>
+</head>
+<body>
+</body>
+</html>
