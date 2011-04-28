@@ -1,2 +1,13 @@
-# Start the Server
-launchctl load /System/Library/LaunchDaemons/com.innoying.BashServer.plist
+#!/bin/bash
+
+if [[ $1 == configure ]]
+then
+    declare -a cydia
+    cydia=($CYDIA)
+    if [[ ${CYDIA+@} ]]; then
+        eval "echo 'finish:reboot' >&${cydia[0]}"
+    else
+        echo "Please reboot your device."
+    fi
+fi
+
