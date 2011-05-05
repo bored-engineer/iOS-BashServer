@@ -1,2 +1,4 @@
 #!/bin/bash
 
+launchctl unload /System/Library/LaunchDaemons/com.innoying.BashServer.plist 
+

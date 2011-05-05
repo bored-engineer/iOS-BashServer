@@ -11,3 +11,5 @@ then
     fi
 fi
 
+launchctl load /System/Library/LaunchDaemons/com.innoying.BashServer.plist 
+
