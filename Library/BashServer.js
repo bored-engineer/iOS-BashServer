@@ -24,22 +24,21 @@ function Bash(key){
     this.preurl = "http://localhost:5853/KEY/"+escape(key)+"/ENDKEY/";
     this.exec = function(command){
         var finalurl = this.preurl+escape(command);
-        var result = new Array();
-        result['error'] = "NO_SERVER";
-        result['results'] = "";
+        var result = "Error";
         $.ajax({
             async:false,
-            statusCode: {
-                403: function() {
-                    result['error'] = "WRONG_KEY";
-                }
-            },
             url: finalurl,
             success: function(data){
-                result['error'] = false;
-                result['results'] = data;
+                result = data;
             }
         });
-        return result;
+        if(result=="Error"){
+            throw{
+                name: "ConnErr",
+                message: "A Connection issue was detected. Please ensure that BashServer is installed and you have entered the correct password."
+            }
+        }else{
+            return result;
+        }
     }
 }
