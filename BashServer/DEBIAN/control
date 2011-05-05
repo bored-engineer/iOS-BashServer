@@ -1,6 +1,6 @@
 Package: com.innoying.BashServer
 Name: BashServer
-Version: 1.0.8
+Version: 1.1
 Architecture: iphoneos-arm
 Description: A Secure Bash Server
  A simple server allowing webapps to run bash commands.
